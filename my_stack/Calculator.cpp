@@ -111,6 +111,10 @@ double TCalculator::CalcPostfix()
 
 void TCalculator::ToPostfix()
 {
+    //if (CheckExpression() == 0)
+    //{
+    //    throw "the_number_of_brackets_is_incorrect";
+    //}
     if (c.Empty() == false)
     {
         this->c.Clear();

@@ -23,7 +23,7 @@ TEST(TCalculator, can_set_infix_form_of_calculator)
     ASSERT_NO_THROW(calc.set_infix(b));
     EXPECT_EQ(calc.get_infix(), b);
 }
-TEST(TCalculator, can_get_postfix_form_of_calculator)
+TEST(TCalculator, can_get_correct_postfix_form_of_calculator_if_the_number_of_brackets_is_correct)
 {
     std::string a = "2+(3*5)";
     std::string b="235*+";
@@ -32,37 +32,56 @@ TEST(TCalculator, can_get_postfix_form_of_calculator)
     ASSERT_NO_THROW(c=calc.get_postfix());
     EXPECT_EQ(c, b);
 }
-//
-//
-//TEST(Tstack, new_stack_is_empty)
-//{
-//    Tstack<int> st(3);
-//
-//    int sostoyanie = st.Empty();
-//
-//    EXPECT_EQ(1, sostoyanie);
-//}
-//
-//
-//TEST(Tstack, can_push_and_pop)
-//{
-//    Tstack<int> st(5);
-//    int a1 = 1;
-//    int a2 = 2;
-//    int a3 = 3;
-//    ASSERT_NO_THROW(st.Push(a1));
-//    ASSERT_NO_THROW(st.Push(a2));
-//    ASSERT_NO_THROW(st.Push(a3));
-//    int b1, b2, b3;
-//    ASSERT_NO_THROW(b1 = st.Pop());
-//    ASSERT_NO_THROW(b2 = st.Pop());
-//    ASSERT_NO_THROW(b3 = st.Pop());
-//    EXPECT_EQ(a1, b3);
-//    EXPECT_EQ(a2, b2);
-//    EXPECT_EQ(a3, b1);
-//
-//
-//}
+TEST(TCalculator, cant_get_correct_postfix_form_of_calculator_if_the_number_of_brackets_is_incorrect)
+{
+    std::string a = "2+((3*5)";
+    std::string b = "235*+";
+    std::string c;
+    TCalculator calc(a);
+    c = calc.get_postfix();
+    EXPECT_NE(c, b);
+}
+TEST(TCalculator, check_expression_return_true_when_the_number_of_brackets_is_correct)
+{
+    std::string a = "2+(3*5)";
+    
+    
+    TCalculator calc(a);
+    bool check;
+    ASSERT_NO_THROW(check=calc.CheckExpression());
+    EXPECT_EQ(1, check);
+}
+TEST(TCalculator, check_expression_return_false_when_the_number_of_brackets_is_incorrect)
+{
+    std::string a = "2+((3*5)";
+
+
+    TCalculator calc(a);
+    bool check;
+    ASSERT_NO_THROW(check = calc.CheckExpression());
+    EXPECT_EQ(0, check);
+}
+TEST(TCalculator, can_calculat_if_the_number_of_brackets_is_correct)
+{
+    std::string a = "2+(3*5)";
+
+
+    TCalculator calc(a);
+    double check;
+    ASSERT_NO_THROW(check = calc.CalcPostfix());
+    EXPECT_EQ(17, check);
+}
+
+TEST(TCalculator, cant_calculat_if_the_number_of_brackets_is_incorrect)
+{
+    std::string a = "2+((3*5)";
+
+
+    TCalculator calc(a);
+    double check;
+    ASSERT_ANY_THROW(check = calc.CalcPostfix());
+    EXPECT_NE(17, check);
+}
 //
 //
 //
