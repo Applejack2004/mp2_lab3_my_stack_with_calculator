@@ -61,84 +61,32 @@ TEST(TCalculator, check_expression_return_false_when_the_number_of_brackets_is_i
     ASSERT_NO_THROW(check = calc.CheckExpression());
     EXPECT_EQ(0, check);
 }
-TEST(TCalculator, can_calculat_if_the_number_of_brackets_is_correct)
+TEST(TCalculator, can_calculate_if_the_number_of_brackets_is_correct)
 {
     std::string a = "2+(3*5)";
-
+    std::string b = "(5^2-24)+((13*13)/169+(((32-21)+2)/13))+((20000*23)/46-(10*(10*100)))";//3
 
     TCalculator calc(a);
-    double check;
+    TCalculator calc2(b);
+
+    double check, check2;
     ASSERT_NO_THROW(check = calc.CalcPostfix());
+    ASSERT_NO_THROW(check2 = calc2.Calculation());
     EXPECT_EQ(17, check);
+    EXPECT_EQ(3, check2);
 }
 
-TEST(TCalculator, cant_calculat_if_the_number_of_brackets_is_incorrect)
+TEST(TCalculator, cant_calculate_if_the_number_of_brackets_is_incorrect)
 {
     std::string a = "2+((3*5)";
-
+    std::string b = "2+(3*5)*";
 
     TCalculator calc(a);
-    double check;
+    TCalculator cal2(b);
+    double check,check2;
     ASSERT_ANY_THROW(check = calc.CalcPostfix());
     EXPECT_NE(17, check);
+    ASSERT_ANY_THROW(check2 = calc.CalcPostfix());
+    EXPECT_NE(17, check);
 }
-//
-//
-//
-//
-//TEST(Tstack, throws_when_use_pop_on_empty_stack)
-//{
-//    Tstack<int> st(3);
-//    ASSERT_ANY_THROW(st.Pop());
-//}
-//
-//TEST(Tstack, throws_when_use_push_on_overflow_stack)
-//{
-//    Tstack<int> st(3);
-//    st.Push(1);
-//    st.Push(1);
-//    st.Push(1);
-//    ASSERT_ANY_THROW(st.Push(1));
-//}
-//
-//TEST(Tstack, throws_when_use_TOP_on_empty_stack)
-//{
-//    Tstack<int> st(3);
-//
-//    ASSERT_ANY_THROW(st.TOP());
-//}
-//
-//TEST(Tstack, return_true_when_use_Full_on_full_stack)
-//{
-//    Tstack<int> st(3);
-//    st.Push(1);
-//    st.Push(1);
-//    st.Push(1);
-//    bool b1 = st.Full();
-//    EXPECT_EQ(1, b1);
-//}
-//TEST(Tstack, return_false_when_use_Full_on_not_full_stack)
-//{
-//    Tstack<int> st(3);
-//    st.Push(1);
-//    st.Push(1);
-//
-//    bool b1 = st.Full();
-//    EXPECT_EQ(0, b1);
-//}
-//TEST(Tstack, return_true_when_use_Empty_on_empty_stack)
-//{
-//    Tstack<int> st(3);
-//
-//    bool b1 = st.Empty();
-//    EXPECT_EQ(1, b1);
-//}
-//TEST(Tstack, return_false_when_use_Empty_on_not_empty_stack)
-//{
-//    Tstack<int> st(3);
-//    st.Push(1);
-//    st.Push(1);
-//
-//    bool b1 = st.Empty();
-//    EXPECT_EQ(0, b1);
-//}
+

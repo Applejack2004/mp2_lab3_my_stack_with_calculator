@@ -11,6 +11,7 @@ public:
 	TCalculator(std::string& str) :inf(str) { ToPostfix(); };
 	bool CheckExpression();
 private:
+	
 	int prioritet(char op)
 	{
 		if (op == '(' || op == ')')
@@ -24,6 +25,7 @@ private:
 	}
 	void ToPostfix();
 public:
+	double Calculation();
 	void set_infix(std::string str);
 	std::string get_postfix();
 	std::string get_infix();

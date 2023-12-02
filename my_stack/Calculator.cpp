@@ -35,6 +35,120 @@ bool TCalculator::CheckExpression()
         return false;
 }
 
+double TCalculator::Calculation()
+{
+    c.Clear(); d.Clear();
+    std::string str = '(' + inf + ')';
+    for (int i = 0; i < str.size(); i++)
+    {
+        if (str[i] == '(') c.Push(str[i]);
+        if (str[i] == ')')
+        {
+            if (c.Empty())
+            {
+                throw "STACK IS EMPTY";
+            }
+            char el = c.Pop();
+            while (el != '(')
+            {
+                double x2 = d.Pop();
+                double x1 = d.Pop();
+                double y = 0;
+                if (el == '+')
+                {
+                    y = x1 + x2;
+                }
+                if (el == '-')
+                {
+                    y = x1 - x2;
+                }
+                if (el == '*')
+                {
+                    y = x1 * x2;
+                }
+                if (el == '/')
+                {
+                    y = x1 / x2;
+                }
+                if (el == '^')
+                {
+                    y = pow(x1,x2);
+                }
+                d.Push(y); 
+                if (c.Empty())
+                {
+                    throw"STACK IS EMPTY";
+                }
+                el = c.Pop();
+
+
+            }
+        }
+        if ((str[i] >= '0') && (str[i] <= '9'))
+        {
+            size_t pos;
+            double x = std::stod(&str[i], &pos);
+            d.Push(x);
+            i = i + pos - 1;
+
+        }
+        if ((str[i] == '+') || (str[i] == '-') || (str[i] == '*') || (str[i] == '/') || (str[i] == '^'))
+        {
+            if (c.Empty())
+            {
+                throw"STACK IS EMPTY";
+            }
+            
+            char el = c.Pop();
+            while (prioritet(el) >= prioritet(str[i]))
+            {
+                double y;
+                double x2 = d.Pop();
+                double x1 = d.Pop();
+                if (el == '+')
+                {
+                    y = x1 + x2;
+                }
+                if (el == '-')
+                {
+                    y = x1 - x2;
+                }
+                if (el == '*')
+                {
+                    y = x1 * x2;
+                }
+                if (el == '/')
+                {
+                    y = x1 / x2;
+                }
+                if (el == '^')
+                {
+                    y = pow(x1, x2);
+                }
+                d.Push(y);
+                if (c.Empty())
+                {
+                    throw"STACK IS EMPTY";
+                }
+                el = c.Pop();
+            }
+            c.Push(el);
+            c.Push(str[i]);
+        }
+
+    }
+    double res = d.Pop();
+    if (!d.Empty())
+    {
+        throw "Extra number";
+    }
+    if (!c.Empty())
+    {
+        throw "Extra operation";
+    }
+    return res;
+}
+
 void TCalculator::set_infix(std::string str)
 {
     inf = str;
@@ -147,15 +261,12 @@ void TCalculator::ToPostfix()
                 postf += opelement;
                 opelement = c.Pop();
             }*/
-            if (prioritet(opelement) >= prioritet(str[i]))
+            while(prioritet(opelement) >= prioritet(str[i]))
             {
                 postf += opelement;
                 opelement = c.Pop();
             }
-            else
-            {
-                c.Push(opelement);
-            }
+            c.Push(opelement);
             c.Push(str[i]);
         }
 
