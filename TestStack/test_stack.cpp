@@ -2,27 +2,25 @@
 
 #include "gtest.h"
 
-TEST(Tstack, can_create_stack_with_positive_size)
+TEST(TStack, can_create_stack_with_positive_size)
 {
-  ASSERT_NO_THROW(Tstack<int> st(3));
-}
-TEST(Tstack, cant_create_stack_with_negative_size)
-{
-    ASSERT_ANY_THROW(Tstack<int> st(-12));
+  ASSERT_NO_THROW(TStack<int> st());
 }
 
-TEST(Tstack, can_get_length)
+
+TEST(TStack, can_get_length)
 {
-    Tstack<int> st(3);
+    TStack<int> st;
+    
  
-
-  EXPECT_EQ(-1, st.get_top());
+    int i = st.GetNum();
+  EXPECT_EQ(0, i);
 }
 
 
-TEST(Tstack, new_stack_is_empty)
+TEST(TStack, new_stack_is_empty)
 {
-    Tstack<int> st(3);
+    TStack<int> st;
 
     int sostoyanie = st.Empty();
 
@@ -30,9 +28,9 @@ TEST(Tstack, new_stack_is_empty)
 }
 
 
-TEST(Tstack, can_push_and_pop)
+TEST(TStack, can_push_and_pop)
 {
-    Tstack<int> st(5);
+    TStack<int> st;
     int a1 = 1;
     int a2 = 2;
     int a3 = 3;
@@ -53,56 +51,56 @@ TEST(Tstack, can_push_and_pop)
 
 
 
-TEST(Tstack, throws_when_use_pop_on_empty_stack)
+TEST(TStack, throws_when_use_pop_on_empty_stack)
 {
-    Tstack<int> st(3);
+    TStack<int> st;
   ASSERT_ANY_THROW(st.Pop());
 }
 
-TEST(Tstack, throws_when_use_push_on_overflow_stack)
+//TEST(Tstack, throws_when_use_push_on_overflow_stack)
+//{
+//    Tstack<int> st(3);
+//    st.Push(1);
+//    st.Push(1);
+//    st.Push(1);
+//    ASSERT_ANY_THROW(st.Push(1));
+//}
+//
+TEST(TStack, throws_when_use_TOP_on_empty_stack)
 {
-    Tstack<int> st(3);
-    st.Push(1);
-    st.Push(1);
-    st.Push(1);
-    ASSERT_ANY_THROW(st.Push(1));
-}
-
-TEST(Tstack, throws_when_use_TOP_on_empty_stack)
-{
-    Tstack<int> st(3);
+    TStack<int> st;
  
-    ASSERT_ANY_THROW(st.TOP());
+    ASSERT_ANY_THROW(st.Top());
 }
-
-TEST(Tstack, return_true_when_use_Full_on_full_stack)
+//
+//TEST(Tstack, return_true_when_use_Full_on_full_stack)
+//{
+//    Tstack<int> st(3);
+//    st.Push(1);
+//    st.Push(1);
+//    st.Push(1);
+//    bool b1 = st.Full();
+//    EXPECT_EQ(1, b1);
+//}
+//TEST(Tstack, return_false_when_use_Full_on_not_full_stack)
+//{
+//    Tstack<int> st(3);
+//    st.Push(1);
+//    st.Push(1);
+//   
+//    bool b1 = st.Full();
+//    EXPECT_EQ(0, b1);
+//}
+TEST(TStack, return_true_when_use_Empty_on_empty_stack)
 {
-    Tstack<int> st(3);
-    st.Push(1);
-    st.Push(1);
-    st.Push(1);
-    bool b1 = st.Full();
-    EXPECT_EQ(1, b1);
-}
-TEST(Tstack, return_false_when_use_Full_on_not_full_stack)
-{
-    Tstack<int> st(3);
-    st.Push(1);
-    st.Push(1);
-   
-    bool b1 = st.Full();
-    EXPECT_EQ(0, b1);
-}
-TEST(Tstack, return_true_when_use_Empty_on_empty_stack)
-{
-    Tstack<int> st(3);
+    TStack<int> st;
    
     bool b1 = st.Empty();
     EXPECT_EQ(1, b1);
 }
-TEST(Tstack, return_false_when_use_Empty_on_not_empty_stack)
+TEST(TStack, return_false_when_use_Empty_on_not_empty_stack)
 {
-    Tstack<int> st(3);
+    TStack<int> st;
     st.Push(1);
     st.Push(1);
 

@@ -5,8 +5,8 @@
 class TCalculator
 {
 	std::string  inf,postf;//инфиксна€ и постфиксна€ строки
-	Tstack<char> c=Tstack<char>(10);// стек дл€ операций
-	Tstack<double> d = Tstack<double>(10);;// стек дл€ чисел
+	TStack<char> c=TStack<char>();// стек дл€ операций
+	TStack<double> d = TStack<double>();;// стек дл€ чисел
 public:
 	TCalculator(std::string& str) :inf(str) { ToPostfix(); };
 	bool CheckExpression();

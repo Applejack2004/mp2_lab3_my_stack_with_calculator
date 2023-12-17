@@ -2,109 +2,134 @@
 #include <algorithm>
 #include <iostream>
 template <class T>
-class Tstack
+struct TNode
 {
-	T* pMem;
-	int max_size;
-	int top;
-public:
-	Tstack& operator = (const Tstack& s)
-	{
-		if (*this == s)
-		{
-			return *this;
-		}
-		delete[] pMem;
-		top = s.top;
-		max_size = s.max_size;
-		pMem = new T[s.max_size];
-		std::copy(s.pMem, s.pMem + top, pMem);
-		return *this;
-
-	}
-	~Tstack()
-	{
-		delete[] pMem;
-	}
-	Tstack( int _max_size=10)
-	{
-		if (_max_size < 1)
-		{
-			throw "bad size";
-		}
-		max_size = _max_size;
-		pMem = new T[max_size];
-		top = -1;
-	}
-	Tstack(const Tstack& s)
-	{
-		max_size = s.max_size;
-		top = s.top;
-		delete[]pMem;
-		pMem = new T[max_size];
-
-		for (int i = 0; i <= top; i++)
-		{
-			pMem[i] = s.pMem[i];
-		}
-	}
-	bool Empty()
-	{
-		return top == -1;
-	}
-	bool Full()
-	{
-		return top == max_size - 1;
-	}
-	void Push(T elem)
-	{
-		if (top >= max_size-1)
-		{
-			throw("Stack Overflow");
-		}
-		pMem[top+1] = elem;
-		top++;
-	}
-	T Pop()
-	{
-		if ( this->Empty()==true)
-		{
-			throw("Stack is empty");
-		}
-		top--;
-		return pMem[top+1];
-	}
-	int get_top()
-	{
-		return top;
-	}
-	T TOP()
-	{
-		if (top == -1)
-			throw ("Stack is empty");
-		return pMem[top];
-	}
-	void Clear()
-	{
-		while (!this->Empty())
-		{
-			this->Pop();
-		}
-	}
-	void Output()
-	{
-		if (top == -1)
-		{
-			std::cout << "stack is empty" << std::endl;
-		}
-		std::cout << '(';
-		for (int i = 0; i <= top; i++)
-		{
-			std::cout << pMem[i] << "";
-
-		}
-		std::cout <<")"<<std::endl;
-	}
-
+	T val;
+	TNode <T>* pNext;
 };
+template<class T>
+class TStack
+{
+	TNode<T>* pFirst;
+public:
+	TStack()
+	{ 
+		pFirst = NULL; 
+	}
+
+	TStack(const TStack<T>& a);
+	TStack& operator=(const TStack& a);
+	void Clear();
+	bool Empty() 
+	{ 
+		return pFirst == NULL; 
+	}
+	void Push(T a);
+	T Top();
+	T Pop();
+	~TStack();
+	bool Full();
+	int GetNum();
+};
+template<class T>
+TStack<T>::TStack(const TStack<T>& a)
+{
+	TNode<T>* tmp = new TNode<T>;
+	tmp = a.pFirst;
+	while (tmp != NULL)
+	{
+		pFirst = tmp;
+		tmp = tmp->pNext;
+	}
+
+}
+template<class T>
+TStack<T>& TStack<T>:: operator=(const TStack& a)
+{
+	TNode<T>* tmp = new TNode<T>;
+	tmp = a.pFirst;
+	while (tmp != NULL)
+	{
+		pFirst = tmp;
+		tmp = tmp->pNext;
+	}
+	return *this;
+}
+template<class T>
+void TStack<T>::Clear()
+{
+	TNode <T>* tmp = pFirst;
+	while (pFirst != NULL)
+	{
+		pFirst = pFirst->pNext;
+		delete tmp;
+		tmp = pFirst;
+	}
+}
+template<class T>
+void TStack<T>::Push(T a)
+{
+	TNode <T>* TMP;
+	TMP = new TNode<T>;
+	TMP->pNext = pFirst;
+	TMP->val = a;
+	pFirst = TMP;
+}
+template<class T>
+T TStack<T>::Top()
+{
+	if (Empty())
+		throw "error";
+	return pFirst->val;
+}
+template<class T>
+T TStack<T>::Pop()
+{
+	if (Empty())
+		throw "error";
+	T res = pFirst->val;
+	TNode<T>* tmp = pFirst;
+	pFirst = pFirst->pNext;
+	delete tmp;
+	return res;
+}
+template<class T>
+TStack<T>::~TStack()
+{
+	TNode <T>* tmp = pFirst;
+	while (pFirst != NULL)
+	{
+		pFirst = pFirst->pNext;
+		delete tmp;
+		tmp = pFirst;
+	}
+}
+template<class T>
+bool TStack<T>::Full()
+{
+	TNode<T>* p = new TNode<T>;
+	if (p)
+	{
+		delete p;
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+template<class T>
+int TStack<T>::GetNum()
+{
+	TNode<T>* p = pFirst;
+	int i = 0;
+	while (p != NULL)
+	{
+		i++;
+		p = (*p).pNext;
+	}
+	return i;
+}
+
+
 
